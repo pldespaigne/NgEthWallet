@@ -6,11 +6,11 @@ NgEthWallet is simple web wallet for Ethereum build with Angular and Ether.js
 
 **Constraints** : 
 * The private key will be stored in the browser local storage
-* Angular 7
-* Angular Material 7
-* EtherJS 4
-* Akita 1.9
-* Infura has ethereum provider
+* [Angular 7](https://angular.io/)
+* [Angular Material 7](https://material.angular.io/)
+* [EtherJS 4](https://github.com/ethers-io/ethers.js/)
+* [Akita 1.9](https://github.com/datorama/akita)
+* [Infura](https://infura.io) has ethereum provider
 * Progressive Web App
 
 **Author :** [Pierre-Louis Despaigne](https://twitter.com/pldespaigne)
