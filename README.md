@@ -13,7 +13,8 @@ NgEthWallet is simple web wallet for Ethereum build with Angular and Ether.js
 * Infura has ethereum provider
 * Progressive Web App
 
-**Author :** Pierre-Louis Despaigne
+**Author :** [Pierre-Louis Despaigne](https://twitter.com/pldespaigne)
+
 **License :** [GNU Public License V3](LICENSE)
 
 ---
