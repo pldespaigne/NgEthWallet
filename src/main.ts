@@ -4,6 +4,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
+import 'hammerjs'; // required to handle mobile gesture for some Material components
+
 if (environment.production) {
   enableProdMode();
 }
