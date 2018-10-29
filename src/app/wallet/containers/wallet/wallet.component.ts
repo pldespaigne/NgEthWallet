@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { EthWallet } from '../../../state/wallet.model';
+import { WalletService } from '../../../state/wallet.service';
+import { WalletQuery } from '../../../state/wallet.query';
 
 @Component({
   selector: 'app-wallet',
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WalletComponent implements OnInit {
 
-  constructor() { }
+  ethWallet: Observable<EthWallet>;
+
+  constructor(public walletService: WalletService, public walletQuery: WalletQuery) { }
 
   ngOnInit() {
+    this.ethWallet = this.walletQuery.select();
   }
 
 }
