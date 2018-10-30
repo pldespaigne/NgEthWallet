@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { EthWallet } from '../../../state/wallet.model';
+// import { EthWallet } from '../../../state/wallet.model';
 import { WalletService } from '../../../state/wallet.service';
 import { WalletQuery } from '../../../state/wallet.query';
 
@@ -12,12 +12,26 @@ import { WalletQuery } from '../../../state/wallet.query';
 })
 export class WalletComponent implements OnInit {
 
-  ethWallet: Observable<EthWallet>;
+  address: string;
+  keystore: string;
+  balance: number;
 
   constructor(public walletService: WalletService, public walletQuery: WalletQuery) { }
 
   ngOnInit() {
-    this.ethWallet = this.walletQuery.select();
+    const walletObserver = {
+      next: wallet => {
+        console.log('Wallet update' , wallet);
+        this.address = wallet.address;
+        this.keystore = wallet.keystore;
+        this.balance = wallet.balance;
+      },
+      error: err => console.error('Observer got an error: ' + err),
+      complete: () => console.log('Observer got a complete notification'),
+    };
+
+    let ethWallet = this.walletQuery.select();
+    ethWallet.subscribe(walletObserver);
   }
 
 }

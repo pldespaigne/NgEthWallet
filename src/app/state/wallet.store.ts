@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { EthWallet, createEthWallet } from './wallet.model';
 
 export interface WalletState {
-  wallet: EthWallet;
+  address: string;
+  keystore: string;
+  balance: number;
 }
 
 export function createInitialState(): WalletState {
   return {
-    wallet: createEthWallet({})
+    address: 'test_address',
+    keystore: 'empty_keystore',
+    balance: 0
   };
 }
 

@@ -11,15 +11,6 @@ export class WalletService {
               ) {
   }
 
-  updateAddress(newAddress: string) {
-    this.walletStore.update(state => ({
-      wallet: {
-        ...state.wallet,
-        address: newAddress
-      }
-    }));
-  }
-
   // get() {
     // this.http.get().subscribe((entities: ServerResponse) => {
       // this.walletStore.set(entities);

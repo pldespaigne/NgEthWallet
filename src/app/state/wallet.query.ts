@@ -8,5 +8,4 @@ export class WalletQuery extends Query<WalletState> {
   constructor(protected store: WalletStore) {
     super(store);
   }
-
 }
