@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
-// import { ID } from '@datorama/akita';
+import { from, Observable } from 'rxjs';
+
 import { WalletStore } from './wallet.store';
-import { HttpClient } from '@angular/common/http';
+
+import { ethers } from 'ethers';
 
 @Injectable({ providedIn: 'root' })
 export class WalletService {
 
-  constructor(private walletStore: WalletStore,
-              // private http: HttpClient
-              ) {
+  ethProvider: ethers.providers.BaseProvider;
+  blockNum$: Observable<number>;
+  ethWallet: ethers.Wallet;
+
+  constructor(private walletStore: WalletStore) {
+    this.ethProvider = ethers.getDefaultProvider('kovan');
+    this.blockNum$ = from(this.ethProvider.getBlockNumber());
+
+    this.ethWallet = ethers.Wallet.createRandom();
+    console.log(this.ethWallet);
   }
-
-  // get() {
-    // this.http.get().subscribe((entities: ServerResponse) => {
-      // this.walletStore.set(entities);
-    // });
-  // }
-
-  // add() {
-    // this.http.post().subscribe((entity: ServerResponse) => {
-      // this.walletStore.add(entity);
-    // });
-  // }
-
 }
