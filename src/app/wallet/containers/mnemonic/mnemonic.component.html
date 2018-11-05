@@ -1,3 +1,14 @@
-<p>
-  mnemonic works!
-</p>
+<mat-horizontal-stepper>
+  <mat-step>
+      <ng-template matStepLabel>Generation</ng-template>
+      <p>Mnemonic Generation</p>
+  </mat-step>
+  <mat-step >
+      <ng-template matStepLabel>Verification</ng-template>
+      <p>Mnemonic Verification</p>
+  </mat-step>
+  <mat-step>
+      <ng-template matStepLabel>Encryption</ng-template>
+      <p>Choosing a Password</p>
+  </mat-step>
+</mat-horizontal-stepper>

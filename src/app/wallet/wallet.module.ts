@@ -7,12 +7,13 @@ import { WalletComponent } from './containers/wallet/wallet.component';
 import { TransactionComponent } from './containers/transaction/transaction.component';
 
 import { MaterialModule } from '../material/material.module';
+import { ImportComponent } from './containers/import/import.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule
   ],
-  declarations: [AboutComponent, MnemonicComponent, VerificationComponent, WalletComponent, TransactionComponent]
+  declarations: [AboutComponent, MnemonicComponent, VerificationComponent, WalletComponent, TransactionComponent, ImportComponent]
 })
 export class WalletModule { }
