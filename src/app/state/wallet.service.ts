@@ -19,4 +19,16 @@ export class WalletService {
     this.ethWallet = ethers.Wallet.createRandom();
     console.log(this.ethWallet);
   }
+
+  refresh() {
+    let keystore = localStorage.getItem('keystore');
+    if(keystore) {
+      this.walletStore.update(state => ({keystore: keystore}));
+    }
+  }
+
+  store(keystore: string) {
+    localStorage.setItem('keystore', keystore);
+    this.refresh();
+  }
 }

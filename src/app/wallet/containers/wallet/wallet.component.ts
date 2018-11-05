@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
-// import { EthWallet } from '../../../state/wallet.model';
+import { WalletState } from '../../../state/wallet.store';
 import { WalletService } from '../../../state/wallet.service';
 import { WalletQuery } from '../../../state/wallet.query';
+import { ethers } from 'ethers';
 
 @Component({
   selector: 'app-wallet',
@@ -12,20 +12,19 @@ import { WalletQuery } from '../../../state/wallet.query';
 })
 export class WalletComponent implements OnInit {
 
-  address: string;
+  existingWallet: boolean;
+
   keystore: string;
-  balance: number;
+  wallet: ethers.Wallet;
 
   constructor(public walletService: WalletService, public walletQuery: WalletQuery) { }
 
   ngOnInit() {
+
+    this.existingWallet = false;
+
     const walletObserver = {
-      next: wallet => {
-        console.log('Wallet update' , wallet);
-        this.address = wallet.address;
-        this.keystore = wallet.keystore;
-        this.balance = wallet.balance;
-      },
+      next: walletState => this.checkState(walletState),
       error: err => console.error('walletObserver got an error: ' + err),
       complete: () => console.log('walletObserver got a complete notification')
     };
@@ -40,6 +39,15 @@ export class WalletComponent implements OnInit {
     }
 
     this.walletService.blockNum$.subscribe(blockNumObserver);
+  }
+
+  checkState(walletState: WalletState) {
+    if(walletState.keystore === '{}'){
+      this.existingWallet = false;
+      console.log('No Wallet !')
+    } else {
+      this.existingWallet = true;
+    }
   }
 
 }

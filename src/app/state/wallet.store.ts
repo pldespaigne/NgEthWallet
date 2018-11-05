@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
+import { ethers } from 'ethers'
 
 export interface WalletState {
-  address: string;
   keystore: string;
-  balance: number;
+  wallet: ethers.Wallet;
 }
 
 export function createInitialState(): WalletState {
   return {
-    address: 'test_address',
-    keystore: 'empty_keystore',
-    balance: 0
+    keystore: localStorage.getItem('keystore') || '{}',
+    wallet: null
   };
 }
 
@@ -23,5 +22,8 @@ export class WalletStore extends Store<WalletState> {
     super(createInitialState());
   }
 
+  updateWallet(wallet: ethers.Wallet) {
+    this.update(state => ({wallet: wallet}));
+  }
 }
 
