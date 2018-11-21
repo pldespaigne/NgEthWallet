@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WalletState } from '../../../state/wallet.store';
-import { WalletService } from '../../../state/wallet.service';
-import { WalletQuery } from '../../../state/wallet.query';
+import { WalletQuery, WalletService, WalletState } from '../../+state';
 import { ethers } from 'ethers';
 
 @Component({
@@ -17,32 +15,32 @@ export class WalletComponent implements OnInit {
   keystore: string;
   wallet: ethers.Wallet;
 
-  constructor(public walletService: WalletService, public walletQuery: WalletQuery) { }
+  constructor(public service: WalletService, public query: WalletQuery) { }
 
   ngOnInit() {
 
     this.existingWallet = false;
 
     const walletObserver = {
-      next: walletState => this.checkState(walletState),
+      next: state => this.checkState(state),
       error: err => console.error('walletObserver got an error: ' + err),
       complete: () => console.log('walletObserver got a complete notification')
     };
 
-    let ethWallet$ = this.walletQuery.select();
+    let ethWallet$ = this.query.select();
     ethWallet$.subscribe(walletObserver);
 
-    const blockNumObserver = {
-      next: num => { console.log('block number : ', num);},
-      error: err => console.error('blockNumObserver got an error: ' + err),
-      complete: () => console.log('blockNumObserver got a complete notification')
-    }
+    // const blockNumObserver = {
+    //   next: num => { console.log('block number : ', num);},
+    //   error: err => console.error('blockNumObserver got an error: ' + err),
+    //   complete: () => console.log('blockNumObserver got a complete notification')
+    // }
 
-    this.walletService.blockNum$.subscribe(blockNumObserver);
+    // this.walletService.blockNum$.subscribe(blockNumObserver);
   }
 
-  checkState(walletState: WalletState) {
-    if(walletState.keystore === '{}'){
+  checkState(state: WalletState) {
+    if(state.keystore === '{}'){
       this.existingWallet = false;
       console.log('No Wallet !')
     } else {

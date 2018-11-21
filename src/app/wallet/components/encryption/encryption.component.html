@@ -1,0 +1,13 @@
+
+<div>
+  <mat-form-field>
+    <label>Choose a <strong>strong</strong> password :</label>
+    <input matInput [(ngModel)]="password" (input)="checkStrength()">
+    <mat-hint>minimum password length : 8</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <label>Repeate your password :</label>
+    <input matInput (input)="checkConfirmation($event.target.value)" [disabled]="disableConfirmation">
+  </mat-form-field>
+  <button mat-raised-button [disabled]="disableEncrypt" (click)="encryptAndSave()">Encrypt & Save my Wallet</button>
+</div>

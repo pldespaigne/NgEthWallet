@@ -1,14 +1,27 @@
-<mat-horizontal-stepper>
+<mat-vertical-stepper *ngIf="mnemonic$ | async as mnemonic">
   <mat-step>
       <ng-template matStepLabel>Generation</ng-template>
-      <p>Mnemonic Generation</p>
+      <app-generation (generate)="onGenerate()" [mnemonic]="mnemonic"></app-generation>
+      <!-- <app-generation></app-generation> -->
+      <div>
+        <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
+        <button *ngIf="canNext" mat-button matStepperNext (click)="nextStep()">Next</button>
+      </div>
   </mat-step>
-  <mat-step >
+  <mat-step>
       <ng-template matStepLabel>Verification</ng-template>
-      <p>Mnemonic Verification</p>
+      <app-verification [mnemonic]="mnemonic" (verificationSuccess)="setVerified($event)"></app-verification>
+      <div>
+        <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
+        <button *ngIf="canNext" mat-button [disabled]="!isVerified" matStepperNext (click)="nextStep()">Next</button>
+      </div>
   </mat-step>
   <mat-step>
       <ng-template matStepLabel>Encryption</ng-template>
-      <p>Choosing a Password</p>
+      <app-encryption (encryptNsave)="encryptAndSave($event)"></app-encryption>
+      <div>
+        <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
+        <button *ngIf="canNext" mat-button matStepperNext (click)="nextStep()">Next</button>
+      </div>
   </mat-step>
-</mat-horizontal-stepper>
+</mat-vertical-stepper>

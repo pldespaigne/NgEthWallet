@@ -8,6 +8,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatStepperModule
+    MatStepperModule,
+    MatIconModule
   ],
   exports: [
     FlexLayoutModule,
@@ -27,7 +29,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatStepperModule
+    MatStepperModule,
+    MatIconModule
   ],
   declarations: []
 })

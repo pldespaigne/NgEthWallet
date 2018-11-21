@@ -4,13 +4,13 @@ import { ethers } from 'ethers'
 
 export interface WalletState {
   keystore: string;
-  wallet: ethers.Wallet;
+  mnemonic: string[];
 }
 
 export function createInitialState(): WalletState {
   return {
     keystore: localStorage.getItem('keystore') || '{}',
-    wallet: null
+    mnemonic: null
   };
 }
 
@@ -22,8 +22,8 @@ export class WalletStore extends Store<WalletState> {
     super(createInitialState());
   }
 
-  updateWallet(wallet: ethers.Wallet) {
-    this.update(state => ({wallet: wallet}));
-  }
+  // updateWallet(wallet: ethers.Wallet) {
+  //   this.update(state => ({wallet: wallet}));
+  // }
 }
 

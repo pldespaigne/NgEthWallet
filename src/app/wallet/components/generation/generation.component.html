@@ -1,0 +1,10 @@
+
+<div>
+  <span *ngFor="let word of mnemonic">
+    {{word}}
+  </span>
+
+  <button mat-button (click)="generate.emit()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+</div>

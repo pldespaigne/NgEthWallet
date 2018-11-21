@@ -1,0 +1,7 @@
+
+<div>
+  <mat-form-field *ngFor="let word of verif; let i = index">
+    <label>#{{word.i + 1}} : </label>
+    <input matInput (input)="checkWord($event.target.value, i)">
+  </mat-form-field>
+</div>
