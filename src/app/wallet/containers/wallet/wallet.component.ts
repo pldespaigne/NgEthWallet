@@ -44,7 +44,9 @@ export class WalletComponent implements OnInit {
       this.existingWallet = false;
       console.log('No Wallet !')
     } else {
+      console.log(state.keystore);
       this.existingWallet = true;
+      this.keystore = state.keystore;
     }
   }
 

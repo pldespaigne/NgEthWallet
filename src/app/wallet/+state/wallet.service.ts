@@ -44,8 +44,11 @@ export class WalletService {
   createEncryptedWallet(password: string){
     const mnemonic = this.query.getSnapshot().mnemonic;
     const wallet = ethers.Wallet.fromMnemonic(mnemonic.join(' '));
-    const keystore = JSON.stringify(wallet.encrypt(password));
-
-    this.store.update(state => ({keystore}));
+    wallet.encrypt(password).then(
+      keystore => {
+        // console.log(keystore);
+        this.store.update(state => ({keystore}));
+      }
+    );
   }
 }
