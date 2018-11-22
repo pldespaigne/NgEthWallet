@@ -1,7 +1,22 @@
 
 <div>
   <mat-form-field>
-    <textarea matInput placeholder="Paste a JSON encrypted Wallet..."></textarea>
+    <label>Paste a JSON encrypted keystore or 12 words mnemonic.</label>
+    <textarea matInput (input)="checkValue($event.target.value)"></textarea>
   </mat-form-field>
-  <button mat-button>Load</button>
+  <div>
+    <label>Wich type of wallet do you want to import ?</label>
+    <mat-radio-group [(ngModel)]="isJSONWallet">
+      <mat-radio-button [value]="true">JSON keystore</mat-radio-button>
+      <mat-radio-button [value]="false">Mnemonic</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <span *ngIf="isJSONWallet; then displayLoad; else displayEncrypt"></span>
+  <ng-template #displayLoad>
+    <button mat-button [disabled]="isLoadDisabled" (click)="importWallet()">Load</button>
+  </ng-template>
+  <ng-template #displayEncrypt>
+    <app-encryption *ngIf="!isLoadDisabled" (encryptNsave)="encryptAndSave($event)"></app-encryption>
+  </ng-template>
 </div>

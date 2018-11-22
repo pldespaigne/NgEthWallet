@@ -33,7 +33,7 @@ export class WalletService {
   //   this.refresh();
   // }
 
-  setMnemonic(){
+  randomMnemonic(){
     const mnemoString = ethers.Wallet.createRandom().mnemonic;
     console.log(mnemoString);
     const mnemonic = mnemoString.split(' ');
@@ -41,9 +41,32 @@ export class WalletService {
     this.store.update(state => ({mnemonic}));
   }
 
+  setMnemonic(mnemo: string){
+    const mnemonic = mnemo.split(' ');
+    // console.log(mnemonic)
+    this.store.update(state => ({mnemonic}));
+  }
+
+  setKeystore(keystore: string){
+    // console.log(keystore);
+    this.store.update(state => ({keystore}));
+  }
+
   createEncryptedWallet(password: string){
     const mnemonic = this.query.getSnapshot().mnemonic;
     const wallet = ethers.Wallet.fromMnemonic(mnemonic.join(' '));
+    wallet.encrypt(password).then(
+      keystore => {
+        // console.log(keystore);
+        this.store.update(state => ({keystore}));
+      }
+    );
+  }
+
+  createEncryptedWalletFromMnemonic(mnemonic: string, password: string){
+    // const mnemonic = this.query.getSnapshot().mnemonic;
+    const wallet = ethers.Wallet.fromMnemonic(mnemonic);
+    this.setMnemonic(mnemonic);
     wallet.encrypt(password).then(
       keystore => {
         // console.log(keystore);

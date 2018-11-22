@@ -23,7 +23,7 @@ export class MnemonicComponent implements OnInit { // TODO rename this component
 
   ngOnInit() {
     this.mnemonic$ = this.query.mnemonic$;
-    this.service.setMnemonic();
+    this.service.randomMnemonic();
     this.canBack = false;
     this.canNext = true;
     this.step = 0;
@@ -32,7 +32,7 @@ export class MnemonicComponent implements OnInit { // TODO rename this component
 
   onGenerate(){
     this.isVerified = false;
-    this.service.setMnemonic();
+    this.service.randomMnemonic();
   }
 
   nextStep(){

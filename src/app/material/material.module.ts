@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ],
   exports: [
     FlexLayoutModule,
@@ -30,7 +32,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ],
   declarations: []
 })

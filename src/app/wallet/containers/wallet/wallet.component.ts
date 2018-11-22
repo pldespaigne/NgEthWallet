@@ -13,7 +13,10 @@ export class WalletComponent implements OnInit {
   existingWallet: boolean;
 
   keystore: string;
-  wallet: ethers.Wallet;
+  address: string;
+  balance: string;
+  // wallet: ethers.Wallet;
+  provider: ethers.providers.BaseProvider;
 
   constructor(public service: WalletService, public query: WalletQuery) { }
 
@@ -47,6 +50,13 @@ export class WalletComponent implements OnInit {
       console.log(state.keystore);
       this.existingWallet = true;
       this.keystore = state.keystore;
+      this.address = ethers.utils.getJsonWalletAddress(this.keystore);
+      this.provider = ethers.getDefaultProvider('kovan');
+      this.provider.getBalance(this.address).then(
+        res => {
+          this.balance = res.toString();
+        }
+      );
     }
   }
 

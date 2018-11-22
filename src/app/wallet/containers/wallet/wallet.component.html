@@ -3,7 +3,8 @@
     <span *ngIf="existingWallet; then walletInfo; else noWallet"></span>
     <ng-template #walletInfo>
         <p>keystore: {{keystore}}</p>
-        <p>balance: {{wallet}}</p>
+        <p>address: {{address}}</p>
+        <p>balance: {{balance}}</p>
     </ng-template>
     <ng-template #noWallet>
         <h1>There is no Wallet stored in this Browser</h1>
