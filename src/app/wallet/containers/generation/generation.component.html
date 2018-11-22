@@ -1,7 +1,7 @@
 <mat-vertical-stepper *ngIf="mnemonic$ | async as mnemonic">
   <mat-step>
       <ng-template matStepLabel>Generation</ng-template>
-      <app-generation (generate)="onGenerate()" [mnemonic]="mnemonic"></app-generation>
+      <app-mnemonic (generate)="onGenerate()" [mnemonic]="mnemonic"></app-mnemonic>
       <!-- <app-generation></app-generation> -->
       <div>
         <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>

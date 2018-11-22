@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 import { WalletQuery, WalletService, WalletState } from '../../+state';
 import { ethers } from 'ethers';
 
@@ -15,7 +16,6 @@ export class WalletComponent implements OnInit {
   keystore: string;
   address: string;
   balance: string;
-  // wallet: ethers.Wallet;
   provider: ethers.providers.BaseProvider;
 
   constructor(public service: WalletService, public query: WalletQuery) { }
@@ -24,7 +24,7 @@ export class WalletComponent implements OnInit {
 
     this.existingWallet = false;
 
-    const walletObserver = {
+    const walletObserver = { //! TODO DO NOT DO THIS !!!!
       next: state => this.checkState(state),
       error: err => console.error('walletObserver got an error: ' + err),
       complete: () => console.log('walletObserver got a complete notification')
@@ -32,14 +32,6 @@ export class WalletComponent implements OnInit {
 
     let ethWallet$ = this.query.select();
     ethWallet$.subscribe(walletObserver);
-
-    // const blockNumObserver = {
-    //   next: num => { console.log('block number : ', num);},
-    //   error: err => console.error('blockNumObserver got an error: ' + err),
-    //   complete: () => console.log('blockNumObserver got a complete notification')
-    // }
-
-    // this.walletService.blockNum$.subscribe(blockNumObserver);
   }
 
   checkState(state: WalletState) {
@@ -59,5 +51,7 @@ export class WalletComponent implements OnInit {
       );
     }
   }
+
+  
 
 }

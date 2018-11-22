@@ -6,11 +6,11 @@ import { Observable, generate } from 'rxjs';
 // import {ethers} from 'ethers';
 
 @Component({
-  selector: 'app-mnemonic',
-  templateUrl: './mnemonic.component.html',
-  styleUrls: ['./mnemonic.component.css']
+  selector: 'app-generation',
+  templateUrl: './generation.component.html',
+  styleUrls: ['./generation.component.css']
 })
-export class MnemonicComponent implements OnInit { // TODO rename this component in geration component
+export class GenerationComponent implements OnInit {
 
   // mnemonic: string[]
   mnemonic$: Observable<string[]>

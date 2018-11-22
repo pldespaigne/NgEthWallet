@@ -18,6 +18,7 @@ export class EncryptionComponent implements OnInit {
   displayPassword: boolean;
   displayConfirmation: boolean;
   match: boolean;
+  isLoading: boolean;
   walletUrl: string;
 
   @Output() encryptNsave = new EventEmitter<string>();
@@ -29,6 +30,7 @@ export class EncryptionComponent implements OnInit {
     this.disableEncrypt = true;
     this.displayPassword = false;
     this.displayConfirmation = false;
+    this.isLoading = false;
     this.match = false;
   }
 
@@ -50,6 +52,7 @@ export class EncryptionComponent implements OnInit {
   }
 
   encryptAndSave() {
+    this.isLoading = true;
     this.encryptNsave.emit(this.password);
     // const blob = new Blob(['{"text":"it works !"}'], { type: 'text/json;charset=utf-8' });
     // saveAs(blob, "wallet.json");
