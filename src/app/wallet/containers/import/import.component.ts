@@ -10,8 +10,10 @@ import { WalletService } from '../../+state';
 })
 export class ImportComponent implements OnInit {
 
+  // TODO factorise all those boolean into a behaviour
   isJSONWallet: boolean;
   isLoadDisabled: boolean;
+
   import: string;
 
   constructor(private service: WalletService) { }
@@ -39,16 +41,11 @@ export class ImportComponent implements OnInit {
 
   importWallet(){
     if(this.isJSONWallet){
-      // console.log('setting keystore');
       this.service.setKeystore(this.import);
-    // } else {
-      // this.service.setMnemonic(value);
-      // console.log('wip');
     }
   }
 
   encryptAndSave(password: string) {
-    // console.log('encrypt and save', this.import, password);
     this.service.createEncryptedWalletFromMnemonic(this.import, password);
   }
 

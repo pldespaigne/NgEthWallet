@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-// import { ethers } from 'ethers';
-
 @Component({
   selector: 'app-mnemonic',
   templateUrl: './mnemonic.component.html',
@@ -14,8 +12,6 @@ export class MnemonicComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    // this.generate();
-  }
+  ngOnInit() { }
 
 }

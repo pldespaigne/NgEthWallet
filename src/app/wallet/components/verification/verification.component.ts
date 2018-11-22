@@ -16,7 +16,6 @@ export class VerificationComponent implements OnInit {
       const [r] = random.splice(Math.floor(Math.random() * random.length), 1);
       this.verif.push({i: r, word: mnemo[r], ok: false});
     }
-    // console.log(this.verif);
   }
 
   @Output() verificationSuccess = new EventEmitter<boolean>();

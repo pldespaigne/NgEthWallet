@@ -22,8 +22,5 @@ export class WalletStore extends Store<WalletState> {
     super(createInitialState());
   }
 
-  // updateWallet(wallet: ethers.Wallet) {
-  //   this.update(state => ({wallet: wallet}));
-  // }
 }
 

@@ -9,29 +9,7 @@ import { WalletQuery } from './wallet.query';
 @Injectable({ providedIn: 'root' })
 export class WalletService {
 
-  // ethProvider: ethers.providers.BaseProvider;
-  // blockNum$: Observable<number>;
-  // ethWallet: ethers.Wallet;
-
-  constructor(private store: WalletStore, private query: WalletQuery) {
-    // this.ethProvider = ethers.getDefaultProvider('kovan');
-    // this.blockNum$ = from(this.ethProvider.getBlockNumber());
-
-    // this.ethWallet = ethers.Wallet.createRandom();
-    // console.log(this.ethWallet);
-  }
-
-  // refresh() {
-  //   let keystore = localStorage.getItem('keystore');
-  //   if(keystore) {
-  //     this.walletStore.update(state => ({keystore: keystore}));
-  //   }
-  // }
-
-  // store(keystore: string) {
-  //   localStorage.setItem('keystore', keystore);
-  //   this.refresh();
-  // }
+  constructor(private store: WalletStore, private query: WalletQuery) { }
 
   randomMnemonic(){
     const mnemoString = ethers.Wallet.createRandom().mnemonic;
@@ -43,12 +21,10 @@ export class WalletService {
 
   setMnemonic(mnemo: string){
     const mnemonic = mnemo.split(' ');
-    // console.log(mnemonic)
     this.store.update(state => ({mnemonic}));
   }
 
   setKeystore(keystore: string){
-    // console.log(keystore);
     this.store.update(state => ({keystore}));
   }
 
@@ -57,19 +33,16 @@ export class WalletService {
     const wallet = ethers.Wallet.fromMnemonic(mnemonic.join(' '));
     wallet.encrypt(password).then(
       keystore => {
-        // console.log(keystore);
         this.store.update(state => ({keystore}));
       }
     );
   }
 
   createEncryptedWalletFromMnemonic(mnemonic: string, password: string){
-    // const mnemonic = this.query.getSnapshot().mnemonic;
     const wallet = ethers.Wallet.fromMnemonic(mnemonic);
     this.setMnemonic(mnemonic);
     wallet.encrypt(password).then(
       keystore => {
-        // console.log(keystore);
         this.store.update(state => ({keystore}));
       }
     );

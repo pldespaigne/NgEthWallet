@@ -10,8 +10,7 @@ import saveAs from 'file-saver';
 })
 export class EncryptionComponent implements OnInit {
 
-  password: string;
-  // passwordConfirm: string;
+  // TODO factorise all those boolean into a behaviour
   disableConfirmation: boolean;
   disableEncrypt: boolean;
   disableSave: boolean;
@@ -19,7 +18,8 @@ export class EncryptionComponent implements OnInit {
   displayConfirmation: boolean;
   match: boolean;
   isLoading: boolean;
-  walletUrl: string;
+
+  password: string;
 
   @Output() encryptNsave = new EventEmitter<string>();
 
@@ -54,8 +54,6 @@ export class EncryptionComponent implements OnInit {
   encryptAndSave() {
     this.isLoading = true;
     this.encryptNsave.emit(this.password);
-    // const blob = new Blob(['{"text":"it works !"}'], { type: 'text/json;charset=utf-8' });
-    // saveAs(blob, "wallet.json");
   }
 
 }

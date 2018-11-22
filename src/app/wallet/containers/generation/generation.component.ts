@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { WalletService, WalletQuery } from '../../+state';
 import { Observable, generate } from 'rxjs';
 
-// import {ethers} from 'ethers';
-
 @Component({
   selector: 'app-generation',
   templateUrl: './generation.component.html',
@@ -12,12 +10,15 @@ import { Observable, generate } from 'rxjs';
 })
 export class GenerationComponent implements OnInit {
 
-  // mnemonic: string[]
-  mnemonic$: Observable<string[]>
+  // TODO factorise all those boolean into a behaviour
   canBack: boolean;
   canNext: boolean;
-  step: number;
   isVerified: boolean;
+  step: number;
+
+  mnemonic$: Observable<string[]>
+  
+  
 
   constructor(private service: WalletService, private query: WalletQuery) { }
 
@@ -41,7 +42,6 @@ export class GenerationComponent implements OnInit {
       this.canBack = true;
       if(this.step == 2) this.canNext = false;
     }
-    // console.log('back :', this.canBack, ' next :', this.canNext, ' step :', this.step, ' verif :', this.isVerified);
   }
 
   backStep(){
@@ -50,16 +50,13 @@ export class GenerationComponent implements OnInit {
       this.canNext = true;
       if(this.step == 0) this.canBack = false;
     }
-    // console.log('back :', this.canBack, ' next :', this.canNext, ' step :', this.step, ' verif :', this.isVerified);
   }
 
   setVerified(verified: boolean) {
-    // console.log('event', verified);
     this.isVerified = verified;
   }
 
   encryptAndSave(password: string) {
-    // console.log('encrypt and save', password);
     this.service.createEncryptedWallet(password);
   }
 
