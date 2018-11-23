@@ -12,9 +12,10 @@ import { EncryptionComponent } from './components/encryption/encryption.componen
 import { FormsModule } from '@angular/forms';
 import { SignDialogComponent } from './components/sign-dialog/sign-dialog.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, FormsModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
   declarations: [
     AboutComponent,
     MnemonicComponent,

@@ -1,4 +1,22 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  ValidationErrors
+} from '@angular/forms';
+
+export const passwordMatchValidator: ValidatorFn = (
+  control: FormGroup
+): ValidationErrors | null => {
+  const password = control.get('password');
+  const confirmation = control.get('confirmation');
+
+  return password && confirmation && password.value !== confirmation.value
+    ? { passwordMatchError: true }
+    : null;
+};
 
 @Component({
   selector: 'app-encryption',
@@ -6,49 +24,29 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./encryption.component.css']
 })
 export class EncryptionComponent implements OnInit {
-  // TODO factorise all those boolean into a behaviour
-  disableConfirmation: boolean;
-  disableEncrypt: boolean;
-  disableSave: boolean;
-  displayPassword: boolean;
-  displayConfirmation: boolean;
-  match: boolean;
   isLoading: boolean;
 
-  password: string;
+  encryptForm = new FormGroup(
+    {
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
+      confirmation: new FormControl('', [Validators.required])
+    },
+    {
+      validators: passwordMatchValidator
+    }
+  );
 
   @Output() encryptNsave = new EventEmitter<string>();
 
   constructor() {}
 
-  ngOnInit() {
-    this.disableConfirmation = true;
-    this.disableEncrypt = true;
-    this.displayPassword = false;
-    this.displayConfirmation = false;
-    this.isLoading = false;
-    this.match = false;
-  }
-
-  checkStrength() {
-    if (this.password.length < 8) {
-      this.disableConfirmation = true;
-    } else {
-      this.disableConfirmation = false;
-    }
-  }
-
-  checkConfirmation(value: string) {
-    if (value === this.password) {
-      console.log('match !');
-      this.disableEncrypt = false;
-    } else {
-      this.disableEncrypt = true;
-    }
-  }
+  ngOnInit() {}
 
   encryptAndSave() {
     this.isLoading = true;
-    this.encryptNsave.emit(this.password);
+    this.encryptNsave.emit(this.encryptForm.get('password').value);
   }
 }

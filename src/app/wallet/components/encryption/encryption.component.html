@@ -2,14 +2,29 @@
   <span *ngIf="isLoading; then: displayLoading; else: displayEncrypt"></span>
   <ng-template #displayLoading> <mat-spinner></mat-spinner> </ng-template>
   <ng-template #displayEncrypt>
-    <mat-form-field>
-      <label>Choose a <strong>strong</strong> password :</label> <input matInput [(ngModel)]="password" (input)="checkStrength()" />
-      <mat-hint>minimum password length : 8</mat-hint>
-    </mat-form-field>
-    <mat-form-field>
-      <label>Repeate your password :</label>
-      <input matInput (input)="checkConfirmation($event.target.value)" [disabled]="disableConfirmation" />
-    </mat-form-field>
-    <button mat-raised-button [disabled]="disableEncrypt" (click)="encryptAndSave()">Encrypt & Save my Wallet</button>
+    <div [formGroup]="encryptForm">
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Choose a strong password" />
+        <mat-error
+          *ngIf="!encryptForm.controls.password.valid && (encryptForm.controls.password.touched || encryptForm.controls.password.dirty)"
+        >
+          <span *ngIf="encryptForm.controls.password.errors.required">Password is required</span>
+          <span *ngIf="encryptForm.controls.password.errors.minlength">Password needs to be at least 8 charcters long</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="confirmation" placeholder="Repeate your password " />
+        <mat-error
+          *ngIf="
+            !encryptForm.controls.confirmation.valid &&
+            (encryptForm.controls.confirmation.touched || encryptForm.controls.confirmation.dirty)
+          "
+        >
+          <span *ngIf="encryptForm.controls.confirmation.errors.required">Password confirmation is required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="!encryptForm.valid"> Password and confirmation are not equal </mat-error>
+      <button mat-raised-button (click)="encryptAndSave()" [disabled]="!encryptForm.valid">Encrypt & Save my Wallet</button>
+    </div>
   </ng-template>
 </div>
