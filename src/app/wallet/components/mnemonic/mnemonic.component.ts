@@ -6,12 +6,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./mnemonic.component.css']
 })
 export class MnemonicComponent implements OnInit {
-
   @Input() mnemonic: string[];
   @Output() generate = new EventEmitter<void>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
-
+  ngOnInit() {}
 }

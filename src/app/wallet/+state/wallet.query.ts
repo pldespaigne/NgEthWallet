@@ -4,12 +4,11 @@ import { WalletStore, WalletState } from './wallet.store';
 
 @Injectable({ providedIn: 'root' })
 export class WalletQuery extends Query<WalletState> {
-
   constructor(protected store: WalletStore) {
     super(store);
   }
-  
-  get mnemonic$ () {
+
+  get mnemonic$() {
     return this.select(store => store.mnemonic);
   }
 }

@@ -1,4 +1,3 @@
-
 <div>
   <mat-form-field>
     <label>Paste a JSON encrypted keystore or 12 words mnemonic.</label>
@@ -12,10 +11,8 @@
     </mat-radio-group>
   </div>
 
-  <span *ngIf="isJSONWallet; then displayLoad; else displayEncrypt"></span>
-  <ng-template #displayLoad>
-    <button mat-button [disabled]="isLoadDisabled" (click)="importWallet()">Load</button>
-  </ng-template>
+  <span *ngIf="isJSONWallet; then: displayLoad; else: displayEncrypt"></span>
+  <ng-template #displayLoad> <button mat-button [disabled]="isLoadDisabled" (click)="importWallet()">Load</button> </ng-template>
   <ng-template #displayEncrypt>
     <app-encryption *ngIf="!isLoadDisabled" (encryptNsave)="encryptAndSave($event)"></app-encryption>
   </ng-template>

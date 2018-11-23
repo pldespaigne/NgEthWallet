@@ -1,12 +1,10 @@
-
 <h1 mat-dialog-title>Sign a Transaction</h1>
 <div mat-dialog-content>
   <p>Enter your password in order to sign this transaction :</p>
-  <mat-form-field>
-    <input matInput type="text">
-  </mat-form-field>
+  <mat-form-field> <input matInput type="text" /> </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
+
   <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
 </div>

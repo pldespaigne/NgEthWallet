@@ -1,7 +1,4 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
-
-import saveAs from 'file-saver';
-
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-encryption',
@@ -9,7 +6,6 @@ import saveAs from 'file-saver';
   styleUrls: ['./encryption.component.css']
 })
 export class EncryptionComponent implements OnInit {
-
   // TODO factorise all those boolean into a behaviour
   disableConfirmation: boolean;
   disableEncrypt: boolean;
@@ -23,7 +19,7 @@ export class EncryptionComponent implements OnInit {
 
   @Output() encryptNsave = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.disableConfirmation = true;
@@ -34,16 +30,16 @@ export class EncryptionComponent implements OnInit {
     this.match = false;
   }
 
-  checkStrength(){
-    if(this.password.length < 8) {
+  checkStrength() {
+    if (this.password.length < 8) {
       this.disableConfirmation = true;
-    }else {
+    } else {
       this.disableConfirmation = false;
     }
   }
 
-  checkConfirmation(value: string){
-    if(value == this.password){
+  checkConfirmation(value: string) {
+    if (value === this.password) {
       console.log('match !');
       this.disableEncrypt = false;
     } else {
@@ -55,5 +51,4 @@ export class EncryptionComponent implements OnInit {
     this.isLoading = true;
     this.encryptNsave.emit(this.password);
   }
-
 }

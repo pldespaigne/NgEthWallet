@@ -1,21 +1,8 @@
-
 <div>
   Send Ether :
-  <mat-form-field>
-      <!-- <label>receiver address :</label> -->
-      <input matInput placeholder="Receiver Address" type="text">
-  </mat-form-field>
-  <mat-form-field>
-      <!-- <label>value :</label> -->
-      <input matInput placeholder="Value" type="number">
-  </mat-form-field>
-  <mat-form-field>
-      <!-- <label>gas limit :</label> -->
-      <input matInput placeholder="Gas Limit" type="number">
-  </mat-form-field>
-  <mat-form-field>
-      <!-- <label>gas price :</label> -->
-      <input matInput placeholder="Gas Price" type="number">
-  </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Receiver Address" type="text" /> </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Value" type="number" /> </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Gas Limit" type="number" /> </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Gas Price" type="number" /> </mat-form-field>
   <button mat-raised-button (click)="openSignDialog()">Send</button>
 </div>

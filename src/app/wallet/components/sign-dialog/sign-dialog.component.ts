@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-sign-dialog',
@@ -7,12 +7,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   styleUrls: ['./sign-dialog.component.css']
 })
 export class SignDialogComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<SignDialogComponent>) {}
 
-  constructor(public dialogRef: MatDialogRef<SignDialogComponent>) { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-  
   onNoClick(): void {
     this.dialogRef.close();
   }

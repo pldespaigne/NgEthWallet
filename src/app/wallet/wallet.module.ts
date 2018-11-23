@@ -12,18 +12,9 @@ import { EncryptionComponent } from './components/encryption/encryption.componen
 import { FormsModule } from '@angular/forms';
 import { SignDialogComponent } from './components/sign-dialog/sign-dialog.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
-// import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MaterialModule,
-    FormsModule,
-    // ReactiveFormsModule
-  ],
-  providers: [
-    // {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
-  ],
+  imports: [CommonModule, MaterialModule, FormsModule],
   declarations: [
     AboutComponent,
     MnemonicComponent,
@@ -35,8 +26,6 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     SignDialogComponent,
     TransactionComponent
   ],
-  entryComponents: [
-    SignDialogComponent
-  ]
+  entryComponents: [SignDialogComponent]
 })
-export class WalletModule { }
+export class WalletModule {}

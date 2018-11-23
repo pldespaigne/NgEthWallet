@@ -9,18 +9,15 @@ import { Observable, generate } from 'rxjs';
   styleUrls: ['./generation.component.css']
 })
 export class GenerationComponent implements OnInit {
-
   // TODO factorise all those boolean into a behaviour
   canBack: boolean;
   canNext: boolean;
   isVerified: boolean;
   step: number;
 
-  mnemonic$: Observable<string[]>
-  
-  
+  mnemonic$: Observable<string[]>;
 
-  constructor(private service: WalletService, private query: WalletQuery) { }
+  constructor(private service: WalletService, private query: WalletQuery) {}
 
   ngOnInit() {
     this.mnemonic$ = this.query.mnemonic$;
@@ -31,24 +28,24 @@ export class GenerationComponent implements OnInit {
     this.isVerified = false;
   }
 
-  onGenerate(){
+  onGenerate() {
     this.isVerified = false;
     this.service.randomMnemonic();
   }
 
-  nextStep(){
-    if(this.step < 2){
-      this.step ++;
+  nextStep() {
+    if (this.step < 2) {
+      this.step++;
       this.canBack = true;
-      if(this.step == 2) this.canNext = false;
+      if (this.step === 2) this.canNext = false;
     }
   }
 
-  backStep(){
-    if(this.step > 0){
-      this.step --;
+  backStep() {
+    if (this.step > 0) {
+      this.step--;
       this.canNext = true;
-      if(this.step == 0) this.canBack = false;
+      if (this.step === 0) this.canBack = false;
     }
   }
 
@@ -59,5 +56,4 @@ export class GenerationComponent implements OnInit {
   encryptAndSave(password: string) {
     this.service.createEncryptedWallet(password);
   }
-
 }
