@@ -1,4 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  AbstractControl
+} from '@angular/forms';
+
+export function wordMismatchValidator(answer: string): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const mismatch = answer !== control.value;
+    return mismatch ? { wordMismatch: true } : null;
+  };
+}
 
 @Component({
   selector: 'app-verification',
@@ -7,6 +21,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class VerificationComponent implements OnInit {
   verif: Object[];
+
+  verifForm: FormGroup;
 
   @Input()
   set mnemonic(mnemo: string[]) {
@@ -19,9 +35,23 @@ export class VerificationComponent implements OnInit {
       this.verif.push({ i: r, word: mnemo[r], ok: false });
     }
     this.verif = this.verif.sort((a, b) => a['i'] - b['i']);
+    this.verifForm = new FormGroup({
+      word0: new FormControl('', [
+        Validators.required,
+        wordMismatchValidator(this.verif[0]['word'])
+      ]),
+      word1: new FormControl('', [
+        Validators.required,
+        wordMismatchValidator(this.verif[1]['word'])
+      ]),
+      word2: new FormControl('', [
+        Validators.required,
+        wordMismatchValidator(this.verif[2]['word'])
+      ])
+    });
   }
 
-  @Output() verificationSuccess = new EventEmitter<boolean>();
+  @Output() valid = new EventEmitter<void>();
 
   constructor() {}
 
@@ -37,11 +67,10 @@ export class VerificationComponent implements OnInit {
   checkVerification() {
     for (const v of this.verif) {
       if (!v['ok']) {
-        this.verificationSuccess.emit(false);
         return;
       }
     }
 
-    this.verificationSuccess.emit(true);
+    this.valid.emit();
   }
 }

@@ -39,7 +39,7 @@ export class EncryptionComponent implements OnInit {
     }
   );
 
-  @Output() encryptNsave = new EventEmitter<string>();
+  @Output() encrypt = new EventEmitter<string>();
 
   constructor() {}
 
@@ -47,6 +47,6 @@ export class EncryptionComponent implements OnInit {
 
   encryptAndSave() {
     this.isLoading = true;
-    this.encryptNsave.emit(this.encryptForm.get('password').value);
+    this.encrypt.emit(this.encryptForm.get('password').value);
   }
 }

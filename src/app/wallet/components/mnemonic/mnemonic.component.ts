@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MnemonicComponent implements OnInit {
   @Input() mnemonic: string[];
-  @Output() generate = new EventEmitter<void>();
+  @Output() reset = new EventEmitter<void>();
 
   constructor() {}
 

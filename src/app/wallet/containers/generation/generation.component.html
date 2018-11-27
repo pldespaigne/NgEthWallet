@@ -1,27 +1,18 @@
-<mat-vertical-stepper *ngIf="(mnemonic$ | async) as mnemonic">
-  <mat-step>
-    <ng-template matStepLabel>Generation</ng-template>
-    <app-mnemonic (generate)="onGenerate()" [mnemonic]="mnemonic"></app-mnemonic>
-    <!-- <app-generation></app-generation> -->
-    <div>
-      <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
-      <button *ngIf="canNext" mat-button matStepperNext (click)="nextStep()">Next</button>
-    </div>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Verification</ng-template>
-    <app-verification [mnemonic]="mnemonic" (verificationSuccess)="setVerified($event)"></app-verification>
-    <div>
-      <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
-      <button *ngIf="canNext" mat-button [disabled]="!isVerified" matStepperNext (click)="nextStep()">Next</button>
-    </div>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Encryption</ng-template>
-    <app-encryption (encryptNsave)="encryptAndSave($event)"></app-encryption>
-    <div>
-      <button *ngIf="canBack" mat-button matStepperPrevious (click)="backStep()">Back</button>
-      <button *ngIf="canNext" mat-button matStepperNext (click)="nextStep()">Next</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+<div *ngIf="(steps$ | async) as steps">
+  #{{ steps }}
+  <mat-vertical-stepper linear *ngIf="(mnemonic$ | async) as mnemonic" (selectionChange)="goToIndex($event)">
+    <mat-step label="Generation">
+      <app-mnemonic [mnemonic]="mnemonic" (reset)="goToStep(1)"></app-mnemonic>
+      <button mat-raised-button matStepperNext>OK</button>
+    </mat-step>
+    <mat-step label="Verification" [completed]="steps > 2 ? true : false">
+      <button mat-button matStepperPrevious><mat-icon>keyboard_backspace</mat-icon></button>
+      <app-verification [mnemonic]="mnemonic" (valid)="goToStep(3)"></app-verification>
+      <button *ngIf="steps > 2" mat-raised-button matStepperNext>OK</button>
+    </mat-step>
+    <mat-step label="Encryption">
+      <button mat-button matStepperPrevious><mat-icon>keyboard_backspace</mat-icon></button>
+      <app-encryption (encrypt)="encryptAndSave($event)"></app-encryption>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

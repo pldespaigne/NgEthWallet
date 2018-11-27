@@ -1,7 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
 import { WalletService, WalletQuery } from '../../+state';
-import { Observable, generate } from 'rxjs';
+import { Observable, generate, BehaviorSubject } from 'rxjs';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+
+// logical steps
+const STEP_GENERATION = 1;
+const STEP_VERIFICATION = 2;
+const STEP_VERIFICATION_SUCCESS = 3;
+const STEP_ENCRYPTION = 4;
+
+// visual (template) stepper steps
+const INDEX_GENERATION = 0;
+const INDEX_VERIFICATION = 1;
+const INDEX_ENCRYPTION = 2;
 
 @Component({
   selector: 'app-generation',
@@ -9,51 +21,42 @@ import { Observable, generate } from 'rxjs';
   styleUrls: ['./generation.component.css']
 })
 export class GenerationComponent implements OnInit {
-  // TODO factorise all those boolean into a behaviour
-  canBack: boolean;
-  canNext: boolean;
-  isVerified: boolean;
-  step: number;
-
   mnemonic$: Observable<string[]>;
+  steps$ = new BehaviorSubject(0);
 
   constructor(private service: WalletService, private query: WalletQuery) {}
 
   ngOnInit() {
     this.mnemonic$ = this.query.mnemonic$;
     this.service.randomMnemonic();
-    this.canBack = false;
-    this.canNext = true;
-    this.step = 0;
-    this.isVerified = false;
-  }
 
-  onGenerate() {
-    this.isVerified = false;
-    this.service.randomMnemonic();
-  }
-
-  nextStep() {
-    if (this.step < 2) {
-      this.step++;
-      this.canBack = true;
-      if (this.step === 2) this.canNext = false;
-    }
-  }
-
-  backStep() {
-    if (this.step > 0) {
-      this.step--;
-      this.canNext = true;
-      if (this.step === 0) this.canBack = false;
-    }
-  }
-
-  setVerified(verified: boolean) {
-    this.isVerified = verified;
+    this.steps$.next(STEP_GENERATION);
   }
 
   encryptAndSave(password: string) {
     this.service.createEncryptedWallet(password);
+  }
+
+  goToStep(step: number) {
+    if (step === STEP_GENERATION) this.service.randomMnemonic();
+    this.steps$.next(step);
+  }
+
+  goToIndex(select: StepperSelectionEvent) {
+    switch (select.selectedIndex) {
+      case INDEX_GENERATION:
+        this.steps$.next(STEP_GENERATION);
+        this.service.randomMnemonic();
+        break;
+      case INDEX_VERIFICATION:
+        this.steps$.next(STEP_VERIFICATION);
+        if (select.previouslySelectedIndex === INDEX_ENCRYPTION) {
+          this.steps$.next(STEP_VERIFICATION_SUCCESS);
+        }
+        break;
+      case INDEX_ENCRYPTION:
+        this.steps$.next(STEP_ENCRYPTION);
+        break;
+    }
   }
 }

@@ -1,5 +1,22 @@
-<div>
+<div [formGroup]="verifForm">
   <mat-form-field *ngFor="let word of verif; let i = index">
-    <label>#{{ word.i + 1 }} : </label> <input matInput (input)="checkWord($event.target.value, i)" />
+    <label>#{{ word.i + 1 }} : </label> <input matInput (input)="checkWord($event.target.value, i)" [formControlName]="'word' + i" />
+    <mat-error *ngIf="!verifForm.controls['word' + i].valid">
+      <p
+        *ngIf="
+          verifForm.controls['word' + i].errors.required && (verifForm.controls['word' + i].touched || verifForm.controls['word' + i].dirty)
+        "
+      >
+        word {{ word.i + 1 }} is required
+      </p>
+      <p
+        *ngIf="
+          verifForm.controls['word' + i].errors.wordMismatch &&
+          (verifForm.controls['word' + i].touched || verifForm.controls['word' + i].dirty)
+        "
+      >
+        word mismatch
+      </p>
+    </mat-error>
   </mat-form-field>
 </div>

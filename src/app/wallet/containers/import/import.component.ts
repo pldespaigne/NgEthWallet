@@ -9,7 +9,7 @@ import { WalletService } from '../../+state';
   styleUrls: ['./import.component.css']
 })
 export class ImportComponent implements OnInit {
-  // TODO factorise all those boolean into a behaviour
+  // TODO factorise all those boolean into routes
   isJSONWallet: boolean;
   isLoadDisabled: boolean;
 

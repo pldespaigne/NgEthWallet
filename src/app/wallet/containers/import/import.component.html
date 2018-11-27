@@ -13,7 +13,5 @@
 
   <span *ngIf="isJSONWallet; then: displayLoad; else: displayEncrypt"></span>
   <ng-template #displayLoad> <button mat-button [disabled]="isLoadDisabled" (click)="importWallet()">Load</button> </ng-template>
-  <ng-template #displayEncrypt>
-    <app-encryption *ngIf="!isLoadDisabled" (encryptNsave)="encryptAndSave($event)"></app-encryption>
-  </ng-template>
+  <ng-template #displayEncrypt> <app-encryption *ngIf="!isLoadDisabled" (encrypt)="encryptAndSave($event)"></app-encryption> </ng-template>
 </div>
