@@ -1,17 +1,14 @@
-<div>
-  <span *ngIf="existingWallet; then: walletInfo; else: noWallet"></span>
+<div *ngIf="(keystore$ | async) as keystore">
+  <span *ngIf="(isKeystoreValid$ | async) as valid; then: walletInfo; else: noWallet"></span>
   <ng-template #noWallet>
     <h1>There is no Wallet stored in this Browser</h1>
     <p>You can create a new Wallet or import an existing one :</p>
-    <mat-tab-group>
-      <mat-tab label="Create"><app-generation></app-generation></mat-tab>
-      <mat-tab label="Import"><app-import></app-import></mat-tab>
-    </mat-tab-group>
   </ng-template>
+  <a mat-raised-button routerLink="/wallet/generate">Create new Wallet</a>
+  <a mat-raised-button routerLink="/wallet/import">Import an existing Wallet</a>
   <ng-template #walletInfo>
     <p>address: {{ address }}</p>
-    <p>balance: {{ balance }}</p>
-
+    <p>balance: {{ balance | eth }} ({{balance | ethusd:price}})</p>
     <app-transaction></app-transaction>
   </ng-template>
 </div>

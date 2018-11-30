@@ -1,5 +1,6 @@
+<a mat-button routerLink="/wallet"><mat-icon>keyboard_backspace</mat-icon></a>
+<a mat-raised-button routerLink="/wallet/import">Import an existing Wallet</a>
 <div *ngIf="(steps$ | async) as steps">
-  #{{ steps }}
   <mat-vertical-stepper linear *ngIf="(mnemonic$ | async) as mnemonic" (selectionChange)="goToIndex($event)">
     <mat-step label="Generation">
       <app-mnemonic [mnemonic]="mnemonic" (reset)="goToStep(1)"></app-mnemonic>

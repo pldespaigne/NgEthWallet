@@ -1,21 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ValidatorFn,
-  ValidationErrors
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors, FormBuilder } from '@angular/forms';
 
-export const passwordMatchValidator: ValidatorFn = (
-  control: FormGroup
-): ValidationErrors | null => {
+export const passwordMatchValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const password = control.get('password');
   const confirmation = control.get('confirmation');
 
-  return password && confirmation && password.value !== confirmation.value
-    ? { passwordMatchError: true }
-    : null;
+  return password && confirmation && password.value !== confirmation.value ? { passwordMatchError: true } : null;
 };
 
 @Component({
@@ -24,28 +14,33 @@ export const passwordMatchValidator: ValidatorFn = (
   styleUrls: ['./encryption.component.css']
 })
 export class EncryptionComponent implements OnInit {
-  isLoading: boolean;
+  public isLoading: boolean;
 
-  encryptForm = new FormGroup(
-    {
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8)
-      ]),
-      confirmation: new FormControl('', [Validators.required])
-    },
-    {
-      validators: passwordMatchValidator
-    }
-  );
+  public encryptForm: FormGroup;
 
   @Output() encrypt = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {}
+  public get pwd() {
+    return this.encryptForm.controls.password;
+  }
 
-  encryptAndSave() {
+  public get confirm() {
+    return this.encryptForm.controls.confirmation;
+  }
+
+  ngOnInit() {
+    this.encryptForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmation: ['', [Validators.required]]
+    },
+    {
+      validator: passwordMatchValidator
+    });
+  }
+
+  public encryptAndSave() {
     this.isLoading = true;
     this.encrypt.emit(this.encryptForm.get('password').value);
   }

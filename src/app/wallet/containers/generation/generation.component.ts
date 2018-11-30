@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { WalletService, WalletQuery } from '../../+state';
 import { Observable, generate, BehaviorSubject } from 'rxjs';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Router } from '@angular/router';
 
 // logical steps
 const STEP_GENERATION = 1;
@@ -24,7 +25,7 @@ export class GenerationComponent implements OnInit {
   mnemonic$: Observable<string[]>;
   steps$ = new BehaviorSubject(0);
 
-  constructor(private service: WalletService, private query: WalletQuery) {}
+  constructor(private service: WalletService, private query: WalletQuery, private router: Router) {}
 
   ngOnInit() {
     this.mnemonic$ = this.query.mnemonic$;
@@ -33,8 +34,9 @@ export class GenerationComponent implements OnInit {
     this.steps$.next(STEP_GENERATION);
   }
 
-  encryptAndSave(password: string) {
-    this.service.createEncryptedWallet(password);
+  public async encryptAndSave(password: string) {
+    await this.service.createEncryptedWallet(password);
+    this.router.navigate(['/wallet']); // TODO INVESTIGATE ROUTE
   }
 
   goToStep(step: number) {

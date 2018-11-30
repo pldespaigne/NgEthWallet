@@ -1,8 +1,8 @@
 <div>
   Send Ether :
-  <mat-form-field> <input matInput placeholder="Receiver Address" type="text" /> </mat-form-field>
-  <mat-form-field> <input matInput placeholder="Value" type="number" /> </mat-form-field>
-  <mat-form-field> <input matInput placeholder="Gas Limit" type="number" /> </mat-form-field>
-  <mat-form-field> <input matInput placeholder="Gas Price" type="number" /> </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Receiver Address" type="text" [(ngModel)]="receiver"/> </mat-form-field>
+  <mat-form-field> <input matInput placeholder="Value in ETH" type="text" [(ngModel)]="value"/> </mat-form-field>
+  <!-- <mat-form-field> <input matInput placeholder="Gas Limit" type="number" /> </mat-form-field> -->
+  <!-- <mat-form-field> <input matInput placeholder="Gas Price" type="number" /> </mat-form-field> -->
   <button mat-raised-button (click)="openSignDialog()">Send</button>
 </div>

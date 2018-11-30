@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -22,7 +22,7 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    WalletModule,
+    HttpClientModule,
     environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ethers } from 'ethers';
 import { WalletService } from '../../+state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-import',
@@ -15,7 +16,7 @@ export class ImportComponent implements OnInit {
 
   import: string;
 
-  constructor(private service: WalletService) {}
+  constructor(private service: WalletService, private router: Router) {}
 
   ngOnInit() {
     this.isJSONWallet = true;
@@ -44,7 +45,8 @@ export class ImportComponent implements OnInit {
     }
   }
 
-  encryptAndSave(password: string) {
-    this.service.createEncryptedWalletFromMnemonic(this.import, password);
+  private async encryptAndSave(password: string) {
+    await this.service.createEncryptedWalletFromMnemonic(this.import, password);
+    this.router.navigate(['/wallet']);
   }
 }

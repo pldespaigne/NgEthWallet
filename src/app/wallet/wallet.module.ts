@@ -13,9 +13,11 @@ import { FormsModule } from '@angular/forms';
 import { SignDialogComponent } from './components/sign-dialog/sign-dialog.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WalletRoutingModule } from './wallet-routing.module';
+import { EtherPipe, WeiPipe, EtherToUsd } from '../utils/ether.pipe';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, WalletRoutingModule],
   declarations: [
     AboutComponent,
     MnemonicComponent,
@@ -25,7 +27,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     VerificationComponent,
     EncryptionComponent,
     SignDialogComponent,
-    TransactionComponent
+    TransactionComponent,
+    EtherPipe,
+    WeiPipe,
+    EtherToUsd
   ],
   entryComponents: [SignDialogComponent]
 })

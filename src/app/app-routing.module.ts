@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { AboutComponent } from './wallet/containers/about/about.component';
-import { WalletComponent } from './wallet/containers/wallet/wallet.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'wallet/about', component: AboutComponent },
-  { path: 'wallet', component: WalletComponent }
+  { path: 'wallet', loadChildren: './wallet/wallet.module#WalletModule' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

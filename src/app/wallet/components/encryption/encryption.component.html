@@ -1,26 +1,19 @@
 <div>
   <span *ngIf="isLoading; then: displayLoading; else: displayEncrypt"></span>
-  <ng-template #displayLoading> <mat-spinner></mat-spinner> </ng-template>
+  <ng-template #displayLoading> <mat-spinner></mat-spinner> </ng-template><!--TODO dispaly none instead of ngIf-->
   <ng-template #displayEncrypt>
     <div [formGroup]="encryptForm">
       <mat-form-field>
-        <input matInput formControlName="password" placeholder="Choose a strong password" />
-        <mat-error
-          *ngIf="!encryptForm.controls.password.valid && (encryptForm.controls.password.touched || encryptForm.controls.password.dirty)"
-        >
-          <span *ngIf="encryptForm.controls.password.errors.required">Password is required</span>
-          <span *ngIf="encryptForm.controls.password.errors.minlength">Password needs to be at least 8 charcters long</span>
+        <input matInput formControlName="password" placeholder="Choose a strong password" type="password" />
+        <mat-error *ngIf="!pwd.valid && (pwd.touched || pwd.dirty)">
+          <span *ngIf="pwd.errors.required">Password is required</span>
+          <span *ngIf="pwd.errors.minlength">Password needs to be at least 8 charcters long</span>
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput formControlName="confirmation" placeholder="Repeate your password " />
-        <mat-error
-          *ngIf="
-            !encryptForm.controls.confirmation.valid &&
-            (encryptForm.controls.confirmation.touched || encryptForm.controls.confirmation.dirty)
-          "
-        >
-          <span *ngIf="encryptForm.controls.confirmation.errors.required">Password confirmation is required</span>
+        <input matInput formControlName="confirmation" placeholder="Repeate your password " type="password" />
+        <mat-error *ngIf="!confirm.valid && (confirm.touched || confirm.dirty)">
+          <span *ngIf="confirm.errors.required">Password confirmation is required</span>
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="!encryptForm.valid"> Password and confirmation are not equal </mat-error>
