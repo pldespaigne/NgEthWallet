@@ -1,8 +1,21 @@
-<div>
+<div [formGroup]="sendForm">
   Send Ether :
-  <mat-form-field> <input matInput placeholder="Receiver Address" type="text" [(ngModel)]="receiver"/> </mat-form-field>
-  <mat-form-field> <input matInput placeholder="Value in ETH" type="text" [(ngModel)]="value"/> </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="receiver" placeholder="Receiver Address" type="text" [(ngModel)]="receiver"/>
+    <mat-error *ngIf="!receiv.valid && (receiv.touched || receiv.dirty)">
+      <span *ngIf="receiv['errors'].required">Receiver is required</span>
+      <span *ngIf="receiv['errors'].minLength">invalid Address</span>
+      <span *ngIf="receiv['errors'].maxLength">invalid Address</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="value" placeholder="Value in ETH" type="text" [(ngModel)]="value"/>
+    <mat-error *ngIf="!val.valid && (val.touched || val.dirty)">
+      <span *ngIf="val['errors'].required">Value is required</span>
+      <span *ngIf="val['errors'].etherValueError">invalid ether Value</span>
+    </mat-error>
+  </mat-form-field>
   <!-- <mat-form-field> <input matInput placeholder="Gas Limit" type="number" /> </mat-form-field> -->
   <!-- <mat-form-field> <input matInput placeholder="Gas Price" type="number" /> </mat-form-field> -->
-  <button mat-raised-button (click)="openSignDialog()">Send</button>
+  <button mat-raised-button (click)="openSignDialog()" [disabled]="!sendForm.valid">Send</button>
 </div>

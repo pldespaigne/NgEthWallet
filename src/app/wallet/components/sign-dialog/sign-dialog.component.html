@@ -1,11 +1,31 @@
-<h1 mat-dialog-title>Sign a Transaction</h1>
-<div mat-dialog-content>
-  <p>{{data | json}}</p>
-  <p>Enter your password in order to sign this transaction :</p>
-  <mat-form-field> <input matInput type="text" [(ngModel)]="password"/> </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-
-  <button mat-raised-button (click)="sendTx()">Ok</button>
+<div>
+  <span *ngIf="isLoading; then: displayLoading; else: displaySign"></span>
+  <ng-template #displayLoading><!--TODO dispaly none instead of ngIf-->
+    <h1 mat-dialog-title>Your Transaction is pending ...</h1>
+    <div mat-dialog-content>
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+  <ng-template #displaySign>
+    <h1 mat-dialog-title>Sign a Transaction</h1>
+    <div [formGroup]="signForm">
+      <div mat-dialog-content>
+        <h3>Send Ether :</h3>
+        <p>to : {{data['tx'].to}}</p>
+        <p>value : {{data['tx'].value | eth}} ({{data['tx'].value | ethusd:data['price']}})</p>
+        <p>Enter your password in order to sign this transaction :</p>
+        <mat-form-field>
+          <input matInput type="password" [(ngModel)]="password" formControlName="password"/>
+          <mat-error *ngIf="!pwd.valid && (pwd.touched || pwd.dirty)">
+            <span *ngIf="pwd['errors'].required">Password is required</span>
+            <span *ngIf="pwd['errors'].minlength">Password needs to be at least 8 charcters long</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-raised-button (click)="sendTx()" [disabled]="!signForm.valid">Ok</button>
+      </div>
+    </div>
+  </ng-template>
 </div>

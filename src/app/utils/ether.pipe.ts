@@ -27,7 +27,7 @@ export class EtherToUsd implements PipeTransform {
         else {
             const eth = ethers.utils.formatEther(value);
             const num = +eth; // convert string to number
-            return (num * price).toFixed(2) + ' $';
+            return '$ ' + (num * price).toFixed(2);
         }
     }
 }

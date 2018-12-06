@@ -6,14 +6,14 @@
       <mat-form-field>
         <input matInput formControlName="password" placeholder="Choose a strong password" type="password" />
         <mat-error *ngIf="!pwd.valid && (pwd.touched || pwd.dirty)">
-          <span *ngIf="pwd.errors.required">Password is required</span>
-          <span *ngIf="pwd.errors.minlength">Password needs to be at least 8 charcters long</span>
+          <span *ngIf="pwd['errors'].required">Password is required</span>
+          <span *ngIf="pwd['errors'].minlength">Password needs to be at least 8 charcters long</span>
         </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput formControlName="confirmation" placeholder="Repeate your password " type="password" />
         <mat-error *ngIf="!confirm.valid && (confirm.touched || confirm.dirty)">
-          <span *ngIf="confirm.errors.required">Password confirmation is required</span>
+          <span *ngIf="confirm['errors'].required">Password confirmation is required</span>
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="!encryptForm.valid"> Password and confirmation are not equal </mat-error>

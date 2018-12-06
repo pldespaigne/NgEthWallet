@@ -42,7 +42,7 @@ export class WalletComponent implements OnInit {
       this.address = ethers.utils.getJsonWalletAddress(keystore);
       if (this.address !== null) {
         this.provider = ethers.getDefaultProvider('kovan');
-        this.provider.getBalance(this.address).then(res => {
+        this.provider.getBalance(this.address).then(res => { // TODO PUT BALANCE IN STORE
           // console.log(res);
           this.balance = res;
         });

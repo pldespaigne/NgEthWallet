@@ -9,6 +9,6 @@
   <ng-template #walletInfo>
     <p>address: {{ address }}</p>
     <p>balance: {{ balance | eth }} ({{balance | ethusd:price}})</p>
-    <app-transaction></app-transaction>
+    <app-transaction [price]="price"></app-transaction>
   </ng-template>
 </div>

@@ -1,20 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+
 import { SignDialogComponent } from '../../components/sign-dialog/sign-dialog.component';
 import { ethers } from 'ethers';
 import { WalletService } from '../../+state';
+
+
+export function etherValueValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    try {
+      ethers.utils.parseEther(control.value);
+      return null;
+    } catch (err) {
+      return {'etherValueError': {value: err}};
+    }
+  };
+}
+
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit {
+
   receiver: string;
   value: string;
   gasPrice: ethers.utils.BigNumber;
   txCount: number;
+  public sendForm: FormGroup;
 
-  constructor(public dialog: MatDialog, private service: WalletService) {}
+  @Input() price: number;
+
+  constructor(public dialog: MatDialog, private service: WalletService, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.service.gasPrice().then(res => {
@@ -25,10 +44,21 @@ export class TransactionComponent implements OnInit {
       console.log(res);
       this.txCount = res;
     });
+    this.sendForm = this.fb.group({
+      receiver: ['', [Validators.required, Validators.minLength(42), Validators.maxLength(42)]],
+      value: ['', [Validators.required, etherValueValidator()]],
+    });
+  }
+
+  public get receiv() {
+    return this.sendForm.controls.receiver;
+  }
+
+  public get val() {
+    return this.sendForm.controls.value;
   }
 
   public async openSignDialog() {
-    // const gasPrice = await this.service.gasPrice();
     const wei = ethers.utils.parseEther(this.value);
 
     const tx: ethers.utils.Transaction = {
@@ -38,12 +68,9 @@ export class TransactionComponent implements OnInit {
       gasLimit: new ethers.utils.BigNumber('21000'),
       gasPrice: this.gasPrice,
       data: '',
-      chainId: 0
+      chainId: ethers.utils.getNetwork('kovan').chainId // TODO GET NETWORK FROM STORE
     };
-    // console.log(tx);
-    // this.service.sendEther(tx, 'azerty123'); // ! DO NOT SET THE PASSWORD LIKE THAT
-    // console.log('open dialog');
-    const dialogRef = this.dialog.open(SignDialogComponent, {data: tx});
+    const dialogRef = this.dialog.open(SignDialogComponent, {data: {tx: tx, price: this.price}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
